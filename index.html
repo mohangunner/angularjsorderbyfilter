@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script src="angular.min.js"></script>
+    <script>
+        var app = angular.module("myapp",[]);
+        app.controller("c1",function($scope){
+            $scope.products = [{
+                prodID:1,
+                Name:"Sony TV",
+                Price:4500,
+                Mfd:new Date('2017/12/01')
+            },{
+                prodID:2,
+                Name:"Blackberry Mobile",
+                Price:800,
+                Mfd:new Date('2017/01/02')
+            },{
+                prodID:3,
+                Name:"Adidas Shoes",
+                Price:300,
+                Mfd:new Date('2018/01/01')
+            }];
+            
+            $scope.fieldName = 'Price';
+            $scope.reverse = false;
+            
+            $scope.sort = function(fieldName){
+                $scope.fieldName = fieldName;
+                $scope.reverse = ($scope.fieldName === fieldName?!$scope.reverse:$scope.reverse);
+            }
+            
+        })
+    </script>
+</head>
+<body ng-app="myapp" ng-controller="c1">
+    <table border="1" width="500px" align="center">
+        <th><a href="#" ng-click="sort('prodID')">ProductID</a></th>
+        <th><a href="#" ng-click="sort('Name')">Name</a></th>
+        <th><a href="#" ng-click="sort('Price')">Price</a></th>
+        <th><a href="#" ng-click="sort('Mfd')">Manufactured Date</a></th>
+        <tr ng-repeat="x in products | orderBy: fieldName:reverse">
+            <td>{{x.prodID}}</td>
+            <td>{{x.Name | uppercase}}</td>
+            <td>{{x.Price | currency}}</td>
+            <td>{{x.Mfd | date}}</td>
+        </tr>
+    </table>
+</body>
+</html>
